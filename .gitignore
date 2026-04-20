@@ -48,6 +48,9 @@ ehthumbs.db
 
 
 *.pt
+images/
+scripts/runs/
+scripts/detect/ 
 
 # (Opsional) Abaikan semua file model berukuran raksasa (.pt), 
 # hapus tanda pagar di bawah jika Anda tidak ingin menyimpan model ke GitHub
