@@ -46,7 +46,8 @@ ehthumbs.db
 *.swp
 *.swo
 
-models/
+
+*.pt
 
 # (Opsional) Abaikan semua file model berukuran raksasa (.pt), 
 # hapus tanda pagar di bawah jika Anda tidak ingin menyimpan model ke GitHub
