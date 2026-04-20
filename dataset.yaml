@@ -1,0 +1,22 @@
+# Contoh File dataset.yaml 
+# File ini digunakan untuk memberitahu YOLO di mana foto-foto ujian/validasi berada.
+
+# ROOT direktori dari dataset Anda (opsional, tapi memudahkan agar path di bawahnya tidak terlalu panjang)
+# Misalnya folder 'dataset_anda' diletakkan bersebelahan dengan folder scripts/ Anda.
+path: ../  
+
+# Tentukan folder mana yang berisi gambar untuk training dan gambar untuk evaluasi (validation)
+# Path ini dihitung "relatif" menyambung dari variabel `path` di atas.
+train: images/train  
+val: images/val      
+test: images/test  # (bisa dikomentari jika Anda tidak punya dataset folder test khusus)
+
+# Jumlah kelas / label objek pada model (Number of Classes)
+nc: 3
+
+# Nama-nama dari kelas tersebut sesuai urutan Index pelatihannya (Index selalu dimulai dari 0)
+# (Misal pada file .txt jawaban YOLO-nya angka 0 berarti Paper, 1 berarti Rock dst.)
+names:
+  0: Paper
+  1: Rock
+  2: Scissors
