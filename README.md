@@ -1,70 +1,70 @@
 # YOLOv8 OpenCV Inference Project
 
-Proyek ini berisi kumpulan script Python untuk memuat (*load*), menguji metrik, menjalankan inferensi secara *real-time* dengan webcam, serta membandingkan performa model deteksi objek (YOLOv8) menggunakan pendekatan berbasis OpenCV.
+This project contains a collection of Python scripts to load, evaluate metrics, run real-time inference with a webcam, and compare the performance of object detection models (YOLOv8) using an OpenCV-based approach.
 
 ---
 
-## 📁 Struktur Direktori
+## 📁 Directory Structure
 
 ```text
 .
-├── models/             # Folder tempat meletakkan file model (.pt), contoh: best.pt, model2.pt
+├── models/             # Folder to place model files (.pt), e.g., best.pt, model2.pt
 ├── scripts/
-│   ├── run_model.py    # Script mendeteksi objek secara live via webcam menggunakan 1 model
-│   ├── compare_model.py# Script untuk membandingkan 2 model secara visual (kiri-kanan)
-│   └── cek_metric.py   # Script untuk mengecek angka evaluasi/metric (mAP, Precision, Recall)
-├── requirements.txt    # Daftar dependensi module Python yang dibutuhkan
-└── .gitignore          # File untuk mengecualikan environment dan file beban besar dari Git
+│   ├── run_model.py    # Script for live object detection via webcam using 1 model
+│   ├── compare_model.py# Script to visually compare 2 models (side-by-side)
+│   └── cek_metric.py   # Script to check evaluation metrics (mAP, Precision, Recall)
+├── requirements.txt    # List of required Python module dependencies
+└── .gitignore          # File to exclude the environment and large files from Git
 ```
 
 ---
 
-## 🛠️ Persiapan & Instalasi
+## 🛠️ Preparation & Installation
 
-1. **Membuat dan Mengaktifkan Virtual Environment**  
-   Disarankan untuk menjalankan kode dalam *virtual environment* agar rapi:
+1. **Create and Activate a Virtual Environment**  
+   It is recommended to run the code in a *virtual environment* to keep it clean:
    ```bash
    python -m venv .venv
-   .venv\Scripts\activate  # Untuk Windows
+   .venv\Scripts\activate  # For Windows
    ```
 
-2. **Menginstal Dependensi**  
-   Jalankan file *requirements* untuk menginstal YOLO (Ultralytics), OpenCV, dan sebagainya:
+2. **Install Dependencies**  
+   Run the *requirements* file to install YOLO (Ultralytics), OpenCV, and others:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Menyiapkan Model YOLO**  
-   Letakkan file hasil *training* YOLO Anda (biasanya ber-ekstensi `.pt`) ke dalam folder `models/`.
+3. **Prepare the YOLO Model**  
+   Place your trained YOLO model file (usually with a `.pt` extension) into the `models/` folder.
 
 ---
 
-## 🚀 Penggunaan Script
+## 🚀 Script Usage
 
-### 1. Deteksi *Real-time* (Webcam Tunggal)
-Menggunakan webcam komputer Anda untuk mendeteksi objek.
+### 1. Real-time Detection (Single Webcam)
+Use your computer's webcam to detect objects.
 ```bash
 python scripts/run_model.py
 ```
-> **Tip:** Anda dapat menghentikan sesi kamera kapan saja dengan menekan tombol `q` pada *keyboard*. Jika ingin mengubah batas keyakinan deteksi (*confidence*), edit nilai `conf=0.5` di dalam script.
+> **Tip:** You can stop the camera session at any time by pressing the `q` key on the keyboard. If you want to change the detection confidence threshold, edit the `conf=0.5` value inside the script.
 
-### 2. Membandingkan 2 Model Sekaligus (*Side-by-Side*)
-Jika Anda memiliki beberapa iterasi / variasi model (misal `best.pt` dan `model2.pt`) dan bimbang model mana yang berfungsi lebih baik:
+### 2. Compare 2 Models Simultaneously (Side-by-Side)
+If you have several iterations/variations of a model (e.g., `best.pt` and `model2.pt`) and are unsure which one performs better:
 ```bash
 python scripts/compare_model.py
 ```
-Script ini akan membuka webcam dan memproses frame yang sama untuk dilemparkan kepada kedua model, lalu menggabungkannya dalam satu layar secara bersebelahan (*split mode*).
+This script will open the webcam and process the same frames to feed them into both models, then combine them on one screen side-by-side (*split mode*).
 
-### 3. Mengevaluasi Metrik Akurasi
-Ingin melihat detail akurasi model seperti mAP50, Precision, dan Recall?
-1. Edit file `scripts/cek_metric.py`. Hapus komentar pada *try-catch statement*.
-2. Arahkan *path* dataset yang ditandai dengan tulisan `data='path/ke/dataset.yaml'`. *(Dibutuhkan file data.yaml sisa *training* model yang digunakan).*
-3. Jalankan:
+### 3. Evaluate Accuracy Metrics
+Want to see detailed accuracy metrics like mAP50, Precision, and Recall?
+1. Edit the `scripts/cek_metric.py` file. Uncomment the *try-catch statement*.
+2. Point the dataset *path* marked with `data='path/to/dataset.yaml'`. *(You need the data.yaml file left over from training the model used).*
+3. Run:
 ```bash
 python scripts/cek_metric.py
 ```
 
 ---
 
-## 📝 Catatan Penting
-- Di dalam konfigurasi `.gitignore`, folder `models/` beserta isinya akan diabaikan oleh Git. Hal ini dilakukan karena beban timbangan file AI (`.pt`) relatif raksasa dan melebihi batasan ukuran upload dari *repository* seperti GitHub. Jika ingin tetap memasukkan model, Anda dapat menyesuaikan baris abaian di `.gitignore`.
+## 📝 Important Notes
+- In the `.gitignore` configuration, the `models/` folder and its contents will be ignored by Git. This is done because AI model files (`.pt`) are relatively large and might exceed the upload size limit of repositories like GitHub. If you still want to include the model, you can adjust the ignore rules in `.gitignore`.
