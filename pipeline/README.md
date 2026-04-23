@@ -6,12 +6,12 @@ Folder `pipeline/` ini didedikasikan secara khusus untuk proses pembuatan, penge
 
 ## 📄 File Utama
 
-- **`yolov8_roboflow_training_template.ipynb`**  
-  File ini adalah notebook Jupyter interaktif yang berfungsi sebagai *template* (kerangka kerja) dari awal hingga akhir (*end-to-end*) untuk melatih (training) model YOLOv8. Sesuai dengan namanya, kerangka ini sudah diintegrasikan dengan platform anotasi gambar **Roboflow**.
+- **`yolov_roboflow_training_template.ipynb`**  
+  File ini adalah notebook Jupyter interaktif yang berfungsi sebagai *template* (kerangka kerja) dari awal hingga akhir (*end-to-end*) untuk melatih (training) model YOLO. Sesuai dengan namanya, kerangka ini sudah diintegrasikan dengan platform anotasi gambar **Roboflow**.
 
 ### 🔄 Alur Kerja (Workflow) pada Notebook:
 Secara berurutan, sel-sel (cells) di dalam notebook tersebut bertugas untuk:
-1. **Setup Lingkungan:** Menginstal *library* Ultralytics YOLOv8 dan modul pendukung lainnya.
+1. **Setup Lingkungan:** Menginstal *library* Ultralytics YOLO dan modul pendukung lainnya.
 2. **Import Dataset (Roboflow):** Meminta API Key Roboflow Anda untuk mengunduh dataset gambar dan label yang sudah Anda anotasikan sebelumnya tanpa harus mengunduhnya secara manual ke komputer.
 3. **Training Model:** Menjalankan perintah pelatihan `yolo train` secara mandiri untuk mengajari AI mendeteksi objek Anda dengan menyesuaikan parameter seperti *epochs* dan *batch sizes*.
 4. **Visualisasi Validasi:** Memantau kemajuan model yang sedang dilatih lewat grafik akurasi (Precision, Recall, mAP).
