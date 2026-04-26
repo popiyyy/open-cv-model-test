@@ -1,6 +1,6 @@
-# YOLOv8 OpenCV Inference Project
+# YOLO OpenCV Inference Project
 
-This project contains a collection of Python scripts to load, evaluate metrics, run real-time inference with a webcam, and compare the performance of object detection models (YOLOv8) using an OpenCV-based approach.
+This project contains a collection of Python scripts to load, evaluate metrics, run real-time inference with a webcam, and compare the performance of object detection models (YOLO) using an OpenCV-based approach.
 
 ---
 
@@ -9,6 +9,7 @@ This project contains a collection of Python scripts to load, evaluate metrics, 
 ```text
 .
 ├── models/             # Folder to place model files (.pt), e.g., best.pt, model2.pt
+├── pipeline/           # Pipeline for YOLO models
 ├── scripts/
 │   ├── run_model.py    # Script for live object detection via webcam using 1 model
 │   ├── compare_model.py# Script to visually compare 2 models (side-by-side)
