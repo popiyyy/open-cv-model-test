@@ -1,0 +1,82 @@
+# ============================================================
+# YOLOv26 Training Pipeline - Konfigurasi
+# ============================================================
+# YOLOv26 adalah model terbaru dari Ultralytics dengan fitur:
+# - NMS-Free (End-to-End), tidak perlu post-processing NMS
+# - MuSGD Optimizer (hybrid SGD + Muon dari Kimi K2)
+# - Hingga 43% lebih cepat di CPU dibanding YOLO11
+# - DFL Removal untuk kompatibilitas edge device
+# ============================================================
+
+# --- Model ---
+# Pilihan model YOLOv26 (dari kecil ke besar):
+#   yolo26n.pt  -> Nano     (tercepat, paling ringan, cocok untuk edge)
+#   yolo26s.pt  -> Small
+#   yolo26m.pt  -> Medium
+#   yolo26l.pt  -> Large
+#   yolo26x.pt  -> Extra Large (paling akurat, paling berat)
+#
+# Varian khusus (arsitektur saja, tanpa pretrained weights):
+#   yolo26-p2.yaml -> Tambah P2 head untuk deteksi objek kecil
+#   yolo26-p6.yaml -> Tambah P6 head untuk input resolusi tinggi
+model: "yolo26n.pt"
+
+# --- Dataset ---
+# Path relatif ke file dataset.yaml dari root project
+dataset: "../../dataset.yaml"
+
+# --- Training Hyperparameters ---
+training:
+  epochs: 100              # Jumlah epoch training
+  batch: 16                # Ukuran batch (turunkan jika GPU kehabisan memori)
+  imgsz: 640               # Ukuran input gambar (pixel)
+  patience: 20             # Early stopping: berhenti jika tidak ada peningkatan setelah N epoch
+  save_period: 10          # Simpan checkpoint model setiap N epoch
+  workers: 4               # Jumlah CPU workers untuk loading data
+  device: ""               # Device: "" (auto), "0" (GPU pertama), "cpu" (CPU only)
+
+# --- Optimizer ---
+# YOLOv26 memperkenalkan MuSGD optimizer (hybrid SGD + Muon)
+# Jika optimizer="auto", ultralytics akan otomatis memilih yang terbaik
+optimizer:
+  name: "auto"             # Optimizer: "auto", "SGD", "Adam", "AdamW"
+  lr0: 0.01                # Learning rate awal
+  lrf: 0.01                # Learning rate akhir (sebagai rasio dari lr0)
+  momentum: 0.937          # Momentum (untuk SGD/MuSGD)
+  weight_decay: 0.0005     # Weight decay (L2 regularization)
+  warmup_epochs: 3.0       # Jumlah epoch untuk warmup
+  warmup_momentum: 0.8     # Momentum awal saat warmup
+
+# --- Augmentation (Augmentasi Data) ---
+augmentation:
+  hsv_h: 0.015             # Augmentasi Hue (0.0 - 1.0)
+  hsv_s: 0.7               # Augmentasi Saturation (0.0 - 1.0)
+  hsv_v: 0.4               # Augmentasi Value/Brightness (0.0 - 1.0)
+  degrees: 0.0             # Rotasi acak (derajat)
+  translate: 0.1           # Translasi acak (rasio)
+  scale: 0.5               # Skala acak (rasio)
+  shear: 0.0               # Shear acak (derajat)
+  perspective: 0.0         # Perspektif acak
+  flipud: 0.0              # Flip vertikal (probabilitas)
+  fliplr: 0.5              # Flip horizontal (probabilitas)
+  mosaic: 1.0              # Augmentasi Mosaic (probabilitas)
+  mixup: 0.0               # Augmentasi MixUp (probabilitas)
+  copy_paste: 0.0          # Augmentasi Copy-Paste (probabilitas)
+  erasing: 0.4             # Random erasing (probabilitas)
+  close_mosaic: 10         # Matikan mosaic di N epoch terakhir
+
+# --- Output ---
+output:
+  project: "runs/yolov26"  # Folder output hasil training
+  name: "train"            # Nama subfolder eksperimen
+  exist_ok: false          # Jika true, timpa folder eksperimen yang sama
+  plots: true              # Tampilkan grafik training
+  save: true               # Simpan model terbaik & terakhir
+  verbose: true            # Tampilkan log detail
+
+# --- Validasi ---
+validation:
+  val: true                # Jalankan validasi setiap epoch
+  split: "val"             # Split dataset untuk validasi
+  conf: 0.001              # Confidence threshold saat validasi
+  iou: 0.7                 # IoU threshold untuk validasi
