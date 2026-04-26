@@ -1,0 +1,74 @@
+# ============================================================
+# YOLOv11 Training Pipeline - Konfigurasi
+# ============================================================
+# File ini mengatur semua hyperparameter dan pengaturan
+# untuk proses training model YOLOv11.
+# Ubah nilai-nilai di bawah sesuai kebutuhan proyek Anda.
+# ============================================================
+
+# --- Model ---
+# Pilihan model YOLOv11 (dari kecil ke besar):
+#   yolo11n.pt  -> Nano     (tercepat, paling ringan)
+#   yolo11s.pt  -> Small
+#   yolo11m.pt  -> Medium
+#   yolo11l.pt  -> Large
+#   yolo11x.pt  -> Extra Large (paling akurat, paling berat)
+model: "yolo11n.pt"
+
+# --- Dataset ---
+# Path relatif ke file dataset.yaml dari root project
+dataset: "../../dataset.yaml"
+
+# --- Training Hyperparameters ---
+training:
+  epochs: 100              # Jumlah epoch training (semakin banyak = semakin lama tapi potensi lebih akurat)
+  batch: 16                # Ukuran batch (turunkan jika GPU kehabisan memori, misal: 8 atau 4)
+  imgsz: 640               # Ukuran input gambar (pixel). 640 adalah default YOLO
+  patience: 20             # Early stopping: berhenti jika tidak ada peningkatan setelah N epoch
+  save_period: 10           # Simpan checkpoint model setiap N epoch
+  workers: 4               # Jumlah CPU workers untuk loading data
+  device: ""               # Device training: "" (auto), "0" (GPU pertama), "cpu" (CPU only)
+
+# --- Optimizer ---
+optimizer:
+  name: "auto"             # Optimizer: "auto", "SGD", "Adam", "AdamW"
+  lr0: 0.01                # Learning rate awal
+  lrf: 0.01                # Learning rate akhir (sebagai rasio dari lr0)
+  momentum: 0.937          # Momentum (untuk SGD)
+  weight_decay: 0.0005     # Weight decay (L2 regularization)
+  warmup_epochs: 3.0       # Jumlah epoch untuk warmup
+  warmup_momentum: 0.8     # Momentum awal saat warmup
+
+# --- Augmentation (Augmentasi Data) ---
+augmentation:
+  hsv_h: 0.015             # Augmentasi Hue (0.0 - 1.0)
+  hsv_s: 0.7               # Augmentasi Saturation (0.0 - 1.0)
+  hsv_v: 0.4               # Augmentasi Value/Brightness (0.0 - 1.0)
+  degrees: 0.0             # Rotasi acak (derajat, -degrees sampai +degrees)
+  translate: 0.1           # Translasi acak (rasio, 0.0 - 1.0)
+  scale: 0.5               # Skala acak (rasio, 0.0 - 1.0)
+  shear: 0.0               # Shear acak (derajat)
+  perspective: 0.0         # Perspektif acak (0.0 - 0.001)
+  flipud: 0.0              # Flip vertikal (probabilitas 0.0 - 1.0)
+  fliplr: 0.5              # Flip horizontal (probabilitas 0.0 - 1.0)
+  mosaic: 1.0              # Augmentasi Mosaic (probabilitas 0.0 - 1.0)
+  mixup: 0.0               # Augmentasi MixUp (probabilitas 0.0 - 1.0)
+  copy_paste: 0.0          # Augmentasi Copy-Paste (probabilitas 0.0 - 1.0)
+  erasing: 0.4             # Random erasing (probabilitas 0.0 - 1.0)
+  close_mosaic: 10         # Matikan mosaic di N epoch terakhir
+
+# --- Output ---
+output:
+  project: "runs/yolov11"  # Folder output hasil training
+  name: "train"            # Nama subfolder eksperimen
+  exist_ok: false          # Jika true, timpa folder eksperimen yang sama
+  plots: true              # Tampilkan grafik training (confusion matrix, loss curves, dll)
+  save: true               # Simpan model terbaik (best.pt) & terakhir (last.pt)
+  verbose: true            # Tampilkan log detail saat training
+
+# --- Validasi ---
+validation:
+  val: true                # Jalankan validasi setiap epoch
+  split: "val"             # Split dataset untuk validasi ("val" atau "test")
+  conf: 0.001              # Confidence threshold saat validasi
+  iou: 0.7                 # IoU threshold untuk NMS saat validasi
